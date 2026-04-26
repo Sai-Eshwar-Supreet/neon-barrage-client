@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerLocomotor : MonoBehaviour
 {
+    [SerializeField] private PlayerMovementInput inputProvider;
     [Header("Abilities")]
     [SerializeField] MoveAbilityData moveAbilityData;
     [SerializeField] JumpAbilityData jumpAbilityData;
@@ -10,40 +12,31 @@ public class PlayerLocomotor : MonoBehaviour
     [Header("Controllers")]
     [SerializeField] CharacterController characterController;
 
+    private PlayerMovementContext movementContext;
 
-    private MoveAbility moveAbility;
-    private JumpAbility jumpAbility;
-    private DashAbility dashAbility;
-
-    private Vector3 velocity = Vector3.zero;
+    private List<BasePlayerModifier> modifiers;
 
     private void Awake()
     {
-        moveAbility = new (moveAbilityData);
-        jumpAbility = new (jumpAbilityData);
-        dashAbility = new (dashAbilityData);
+        movementContext = new PlayerMovementContext(characterController, inputProvider);
+
+        modifiers = new()
+        {
+            new HorizontalMoveModifier(movementContext, moveAbilityData),
+            new JumpModifier(movementContext, jumpAbilityData),
+            new DashModifier(movementContext, dashAbilityData, this),
+            new LookDirectionModifier(movementContext),
+        };
+
     }
 
-    private void OnEnable()
+    public void ApplyModifiers()
     {
-        moveAbility.Enable();
-        jumpAbility.Enable();
-        dashAbility.Enable();
-    }
+        foreach( var  modifier in modifiers)
+        {
+            modifier.Update();
+        }
 
-    private void OnDisable()
-    {
-        moveAbility.Disable();
-        jumpAbility.Disable();
-        dashAbility.Disble();
-    }
-
-    private void Update()
-    {
-        moveAbility.Apply(ref velocity);
-        jumpAbility.Apply(ref velocity, characterController.isGrounded);
-        dashAbility.Apply(ref velocity, this);
-
-        characterController.Move(velocity * Time.deltaTime);
+        characterController.Move(movementContext.Velocity * Time.deltaTime);
     }
 }

@@ -11,10 +11,22 @@ public abstract class BaseStateMachine : MonoBehaviour
     protected virtual void Awake()
     {
         InitializeStates();
+
+        CurrentState?.EnterState();
     }
 
     /// <summary>
     /// Initialize the states of the state machine here.
     /// </summary>
     public abstract void InitializeStates();
+
+    private void Update()
+    {
+        CurrentState?.UpdateState();
+    }
+
+    private void FixedUpdate()
+    {
+        CurrentState?.UpdatePhysics();
+    }
 }

@@ -8,7 +8,6 @@ public abstract class BaseState<S> : IState where S : BaseStateMachine
 
     public abstract void EnterState();
     public abstract void UpdateState();
-    public abstract void UpdatePhysics();
     public abstract void CheckSwitchStates();
     public abstract void ExitState();
 

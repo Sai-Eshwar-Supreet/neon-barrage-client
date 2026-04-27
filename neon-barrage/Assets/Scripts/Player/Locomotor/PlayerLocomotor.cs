@@ -4,27 +4,24 @@ using System.Collections.Generic;
 public class PlayerLocomotor : MonoBehaviour
 {
     [SerializeField] private PlayerMovementInput inputProvider;
-    [Header("Abilities")]
-    [SerializeField] MoveAbilityData moveAbilityData;
-    [SerializeField] JumpAbilityData jumpAbilityData;
-    [SerializeField] DashAbilityData dashAbilityData;
+    [SerializeField] private PlayerStats playerStats;
 
     [Header("Controllers")]
-    [SerializeField] CharacterController characterController;
+    [SerializeField] private CharacterController characterController;
 
     private PlayerMovementContext movementContext;
 
-    private List<BasePlayerModifier> modifiers;
+    private List<BasePlayerModifier<PlayerMovementContext>> modifiers;
 
     private void Awake()
     {
-        movementContext = new PlayerMovementContext(characterController, inputProvider);
+        movementContext = new PlayerMovementContext(characterController, inputProvider, playerStats);
 
         modifiers = new()
         {
-            new HorizontalMoveModifier(movementContext, moveAbilityData),
-            new JumpModifier(movementContext, jumpAbilityData),
-            new DashModifier(movementContext, dashAbilityData, this),
+            new HorizontalMoveModifier(movementContext),
+            new JumpModifier(movementContext),
+            new DashModifier(movementContext),
             new LookDirectionModifier(movementContext),
         };
 

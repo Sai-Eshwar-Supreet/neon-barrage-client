@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class PlayerMovementContext
+public class PlayerTraversalContext
 {
     public CharacterController Controller { get; private set; }
     public Transform Transform => Controller.transform;
-    public PlayerMovementInput Input { get; private set; }
-    public PlayerStats Stats  { get; private set; }
+    public PlayerTraversalInput Input { get; private set; }
+    public PlayerStats Stats { get; private set; }
     public Vector3 Velocity { get; set; } = Vector3.zero;
 
-    public PlayerMovementContext(CharacterController controller, PlayerMovementInput input, PlayerStats stats)
+    public PlayerTraversalContext(CharacterController controller, PlayerTraversalInput input, PlayerStats stats)
     {
         Controller = controller;
         Input = input;

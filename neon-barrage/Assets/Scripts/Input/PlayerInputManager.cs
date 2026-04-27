@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.InputSystem.DefaultInputActions;
 
 [DisallowMultipleComponent]
 public class PlayerInputManager : MonoBehaviour
@@ -12,6 +11,15 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (m_playerActions == null) Initialise();
             return m_playerActions.Movement;
+        }
+    }
+
+    public PlayerActions.TraversalActions Traversal
+    {
+        get
+        {
+            if (m_playerActions == null) Initialise();
+            return m_playerActions.Traversal;
         }
     }
 

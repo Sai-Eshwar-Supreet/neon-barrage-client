@@ -20,11 +20,6 @@ public interface IState
     public void UpdateState();
 
     /// <summary>
-    /// Called during each physics update / fixed update loop.
-    /// </summary>
-    public void UpdatePhysics();
-
-    /// <summary>
     /// State switching logic goes here.
     /// </summary>
     public void CheckSwitchStates();

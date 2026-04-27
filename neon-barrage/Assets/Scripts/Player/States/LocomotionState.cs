@@ -1,22 +1,12 @@
 using UnityEngine;
 
-public class LocomotionState : BaseHierarchicalState<PlayerController>
+public class LocomotionState : BaseState<PlayerController>
 {
-    public LocomotionState(PlayerController context, bool isRootState) : base(context, isRootState)
-    {
-    }
+    public LocomotionState(PlayerController context) : base(context) { }
 
     public override void EnterState()
     {
 
-    }
-    public override void InitializeSubstates()
-    {
-        // no sub states
-    }
-    public override void UpdatePhysics()
-    {
-        // noop
     }
 
     public override void UpdateState()
@@ -27,7 +17,9 @@ public class LocomotionState : BaseHierarchicalState<PlayerController>
     }
     public override void CheckSwitchStates()
     {
-        // add state transitions
+        bool triesClimbing = Context.Traverser.IsClimbPressed && Context.Traverser.IsWallAvailable;
+
+        if (triesClimbing) SwitchState<ClimbState>();
     }
 
     public override void ExitState()

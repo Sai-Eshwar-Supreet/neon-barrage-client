@@ -1,13 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerMovementInput : MonoBehaviour
 {
     [SerializeField] private PlayerInputManager playerInputManager;
     [SerializeField] private bool canMove = true;
-    [SerializeField] private bool canSprint = true;
     [SerializeField] private bool canJump = true;
     [SerializeField] private bool canDash = true;
 
@@ -15,14 +12,7 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private float jumpBufferDuration = 0.2f;
     [SerializeField] private float dashBufferDuration = 0.2f;
 
-    public UnityEvent<float> OnHorizontalMoveInput;
-    public UnityEvent<bool> OnSprintInput;
-    public UnityEvent OnJumpInput;
-    public UnityEvent OnDashInput;
-    public UnityEvent<Vector2> OnDashDirectionInput;
-
     public bool CanMove => canMove;
-    public bool CanSprint => canSprint;
     public bool CanJump => canJump;
     public bool CanDash => canDash;
 
@@ -30,7 +20,6 @@ public class PlayerMovementInput : MonoBehaviour
 
     public float HorizontalMove { get; private set; }
     public Vector2 DashDirection { get; private set;  }
-    public bool IsSprintPressed { get; private set; }
     public bool IsJumpPressed => jumpBufferTime > 0;
     public bool IsDashPressed => dashBufferTime > 0;
 
@@ -70,7 +59,6 @@ public class PlayerMovementInput : MonoBehaviour
         movementInput.Disable();
 
         HorizontalMove = 0;
-        IsSprintPressed = false;
         ResetJumpBuffer();
         ResetDashBuffer();
     }
@@ -81,11 +69,6 @@ public class PlayerMovementInput : MonoBehaviour
         else movementInput.Move.Disable();
         movementInput.Move.performed += OnMoveInputReceived;
         movementInput.Move.canceled += OnMoveInputReceived;
-
-        if (canSprint) movementInput.Sprint.Enable();
-        else movementInput.Sprint.Disable();
-        movementInput.Sprint.performed += OnSprintInputReceived;
-        movementInput.Sprint.canceled += OnSprintInputReceived;
 
         if (canJump) movementInput.Jump.Enable();
         else movementInput.Jump.Disable();
@@ -111,9 +94,6 @@ public class PlayerMovementInput : MonoBehaviour
         movementInput.Move.performed -= OnMoveInputReceived;
         movementInput.Move.canceled -= OnMoveInputReceived;
 
-        movementInput.Sprint.performed -= OnSprintInputReceived;
-        movementInput.Sprint.canceled -= OnSprintInputReceived;
-
         movementInput.Jump.performed -= OnJumpInputReceived;
 
         movementInput.Dash.performed -= OnDashInputReceived;
@@ -124,31 +104,21 @@ public class PlayerMovementInput : MonoBehaviour
 
     private void OnMoveInputReceived(InputAction.CallbackContext context)
     {
-        HorizontalMove = context.ReadValue<Vector2>().x;
-        OnHorizontalMoveInput?.Invoke(HorizontalMove);
-    }
-
-    private void OnSprintInputReceived(InputAction.CallbackContext context)
-    {
-        IsSprintPressed = context.ReadValueAsButton();
-        OnSprintInput?.Invoke(IsSprintPressed);
+        HorizontalMove = context.ReadValue<float>();
     }
 
     private void OnJumpInputReceived(InputAction.CallbackContext context)
     {
         jumpBufferTime = jumpBufferDuration;
-        OnJumpInput?.Invoke();
     }
     private void OnDashInputReceived(InputAction.CallbackContext context)
     {
         dashBufferTime = dashBufferDuration;
-        OnDashInput?.Invoke();
     }
 
     private void OnDashDirectionInputReceived(InputAction.CallbackContext context)
     {
         DashDirection = context.ReadValue<Vector2>();
-        OnDashDirectionInput?.Invoke(DashDirection);
     }
 
     private void Update()

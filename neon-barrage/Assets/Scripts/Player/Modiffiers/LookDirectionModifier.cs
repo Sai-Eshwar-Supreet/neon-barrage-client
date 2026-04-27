@@ -1,12 +1,10 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class LookDirectionModifier : BasePlayerModifier
+public class LookDirectionModifier : BasePlayerModifier<PlayerMovementContext>
 {
     private float currentDirection = 1;
-    public LookDirectionModifier(PlayerMovementContext ctx) : base(ctx)
-    {
-    }
+    public LookDirectionModifier(PlayerMovementContext ctx) : base(ctx) { }
 
     public override void Update()
     {

@@ -34,6 +34,18 @@ public class PlayerLocomotor : MonoBehaviour
             modifier.Update();
         }
 
+    }
+
+    public void Move()
+    {
         characterController.Move(movementContext.Velocity * Time.deltaTime);
+    }
+
+    public void TerminateModifiers()
+    {
+        foreach (var modifier in modifiers)
+        {
+            modifier.OnExit();
+        }
     }
 }

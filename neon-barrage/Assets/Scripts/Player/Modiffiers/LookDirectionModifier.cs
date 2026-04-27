@@ -6,6 +6,11 @@ public class LookDirectionModifier : BasePlayerModifier<PlayerMovementContext>
     private float currentDirection = 1;
     public LookDirectionModifier(PlayerMovementContext ctx) : base(ctx) { }
 
+    public override void OnExit()
+    {
+        // noop
+    }
+
     public override void Update()
     {
         float direction = Mathf.Sign(ctx.Velocity.x);

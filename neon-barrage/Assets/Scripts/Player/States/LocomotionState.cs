@@ -12,6 +12,7 @@ public class LocomotionState : BaseState<PlayerController>
     public override void UpdateState()
     {
         Context.Locomotor.ApplyModifiers();
+        Context.Locomotor.Move();
 
         CheckSwitchStates();
     }
@@ -24,6 +25,6 @@ public class LocomotionState : BaseState<PlayerController>
 
     public override void ExitState()
     {
-
+        Context.Locomotor.TerminateModifiers();
     }
 }

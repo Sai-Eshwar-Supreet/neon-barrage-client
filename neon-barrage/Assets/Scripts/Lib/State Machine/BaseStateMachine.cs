@@ -24,9 +24,4 @@ public abstract class BaseStateMachine : MonoBehaviour
     {
         CurrentState?.UpdateState();
     }
-
-    private void FixedUpdate()
-    {
-        CurrentState?.UpdatePhysics();
-    }
 }

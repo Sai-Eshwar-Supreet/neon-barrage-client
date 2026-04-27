@@ -6,6 +6,11 @@ public class ClimbModifier : BasePlayerModifier<PlayerTraversalContext>
     {
     }
 
+    public override void OnExit()
+    {
+        // noop
+    }
+
     public override void Update()
     {
         Vector3 vel = ctx.Velocity;

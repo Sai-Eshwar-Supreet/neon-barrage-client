@@ -945,7 +945,7 @@ Transform:
   m_GameObject: {fileID: 1119968760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.29, y: 5.7799997, z: 0}
+  m_LocalPosition: {x: 3.29, y: 11.81, z: 0}
   m_LocalScale: {x: 1, y: 12, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1101,7 +1101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   locomotor: {fileID: 1731647489}
   traverser: {fileID: 1731647493}
-  area: {fileID: 440775747}
 --- !u!114 &1731647493
 MonoBehaviour:
   m_ObjectHideFlags: 0

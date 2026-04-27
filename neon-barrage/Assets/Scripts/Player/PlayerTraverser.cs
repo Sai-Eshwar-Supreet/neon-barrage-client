@@ -41,4 +41,9 @@ public class PlayerTraverser : MonoBehaviour
 
         traversalContext.Transform.DOMove(point, traversalContext.Stats.VaultDuration).onComplete += () => onVaultComplete?.Invoke();
     }
+
+    public void TerminateModifiers()
+    {
+        climbModifier.OnExit();
+    }
 }

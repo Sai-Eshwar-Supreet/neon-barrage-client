@@ -33,7 +33,7 @@ public class ClimbState : BaseState<PlayerController>
 
     public override void ExitState()
     {
-        // noop
+        Context.Traverser.TerminateModifiers();
     }
 
 }

@@ -2,9 +2,11 @@ using UnityEngine;
 public class DashModifier : BasePlayerModifier<PlayerMovementContext>
 {
     private Vector3? dashVelocity = null;
+    private bool IsDashing => dashVelocity.HasValue;
+    private bool IsOnCooldown => Time.time < CooldownEndTime;
+    private float CooldownEndTime => dashEndTime + ctx.Stats.DashCooldown;
 
     private float dashEndTime = 0;
-    private float cooldownEndTime = 0;
 
     public DashModifier(PlayerMovementContext ctx) : base(ctx) { }
 
@@ -12,10 +14,9 @@ public class DashModifier : BasePlayerModifier<PlayerMovementContext>
     {
         float now = Time.time;
 
-        bool isDashing = dashVelocity.HasValue;
-        bool isOnCooldown = Time.time < cooldownEndTime;
+        if(IsDashing && now > dashEndTime) dashVelocity = null;
 
-        if (!isDashing && !isOnCooldown && ctx.Velocity.sqrMagnitude > 0.01f && ctx.Input.IsDashPressed)
+        if (!IsDashing && !IsOnCooldown && ctx.Input.IsDashPressed)
         {
             dashVelocity = ctx.Input.DashDirection * ctx.Stats.DashSpeed;
             dashEndTime = now + ctx.Stats.DashDuration;
@@ -23,15 +24,11 @@ public class DashModifier : BasePlayerModifier<PlayerMovementContext>
             return;
         }
         
-        if (isDashing)
-        {
-            ctx.Velocity = dashVelocity.Value;
+        if (IsDashing) ctx.Velocity = dashVelocity.Value;
+    }
 
-            if(now > dashEndTime)
-            {
-                dashVelocity = null;
-                cooldownEndTime = now + ctx.Stats.DashCooldown;
-            }
-        }
+    public override void OnExit()
+    {
+        dashEndTime = Time.time;
     }
 }

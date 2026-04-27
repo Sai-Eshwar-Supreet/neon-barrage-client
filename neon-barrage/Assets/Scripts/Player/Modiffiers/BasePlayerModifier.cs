@@ -9,4 +9,6 @@ public abstract class BasePlayerModifier<T>
         this.ctx = ctx;
     }
     public abstract void Update();
+
+    public abstract void OnExit();
 }

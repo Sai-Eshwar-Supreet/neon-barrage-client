@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8122396ae63ba419592fb126191ab6, type: 3}
+  m_Name: Boss Turret Ammo
+  m_EditorClassIdentifier: Assembly-CSharp::AmmoData
+  <ImpactPS>k__BackingField: {fileID: 1639391734161317178, guid: 0cad6e74c6a03c54cb77567c2e3fb954, type: 3}
+  <BulletSpeed>k__BackingField: 30
+  <DamagePerHit>k__BackingField: 20
+  <LifeTime>k__BackingField: 20

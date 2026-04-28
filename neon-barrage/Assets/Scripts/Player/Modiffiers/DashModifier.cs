@@ -16,7 +16,9 @@ public class DashModifier : BasePlayerModifier<PlayerMovementContext>
 
         if(IsDashing && now > dashEndTime) dashVelocity = null;
 
-        if (!IsDashing && !IsOnCooldown && ctx.Input.IsDashPressed)
+        if (!IsDashing && IsOnCooldown) return;
+
+        if (!IsDashing && ctx.Input.IsDashPressed)
         {
             dashVelocity = ctx.Input.DashDirection * ctx.Stats.DashSpeed;
             dashEndTime = now + ctx.Stats.DashDuration;
@@ -29,6 +31,11 @@ public class DashModifier : BasePlayerModifier<PlayerMovementContext>
 
     public override void OnExit()
     {
-        dashEndTime = Time.time;
+        if (IsDashing)
+        {
+            dashEndTime = Time.time;
+        }
+
+        dashVelocity = null;
     }
 }

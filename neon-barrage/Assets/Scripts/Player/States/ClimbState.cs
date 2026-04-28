@@ -6,9 +6,11 @@ public class ClimbState : BaseState<PlayerController>
     {
     }
 
+    private bool enteredWithWall = false;
+
     public override void EnterState()
     {
-        // noop
+        enteredWithWall = Context.Traverser.IsWallAvailable;
     }
 
     public override void UpdateState()
@@ -18,7 +20,7 @@ public class ClimbState : BaseState<PlayerController>
     }
     public override void CheckSwitchStates()
     {
-        if (Context.Traverser.IsClimbPressed && !Context.Traverser.IsWallAvailable)
+        if (enteredWithWall && Context.Traverser.IsClimbPressed && !Context.Traverser.IsWallAvailable)
         {
             SwitchState<VaultState>();
             return;
@@ -34,6 +36,7 @@ public class ClimbState : BaseState<PlayerController>
     public override void ExitState()
     {
         Context.Traverser.TerminateModifiers();
+        enteredWithWall = false;
     }
 
 }

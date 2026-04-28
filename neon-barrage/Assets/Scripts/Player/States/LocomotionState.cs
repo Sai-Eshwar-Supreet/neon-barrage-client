@@ -18,9 +18,7 @@ public class LocomotionState : BaseState<PlayerController>
     }
     public override void CheckSwitchStates()
     {
-        bool triesClimbing = Context.Traverser.IsClimbPressed && Context.Traverser.IsWallAvailable;
-
-        if (triesClimbing) SwitchState<ClimbState>();
+        if (Context.Traverser.IsClimbPressed && Context.Traverser.IsWallAvailable) SwitchState<ClimbState>();
     }
 
     public override void ExitState()

@@ -24,7 +24,6 @@ public class PlayerLocomotor : MonoBehaviour
             new DashModifier(movementContext),
             new LookDirectionModifier(movementContext),
         };
-
     }
 
     public void ApplyModifiers()
@@ -33,7 +32,6 @@ public class PlayerLocomotor : MonoBehaviour
         {
             modifier.Update();
         }
-
     }
 
     public void Move()
